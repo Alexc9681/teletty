@@ -20,7 +20,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/teletty/teletty"
+    "url": "https://github.com/olegchetrean/teletty"
   },
   "homepage": "https://teletty.dev",
   "engines": {

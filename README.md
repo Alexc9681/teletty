@@ -41,7 +41,7 @@ npx teletty
 ### Docker
 
 ```bash
-git clone https://github.com/teletty/teletty.git && cd teletty
+git clone https://github.com/olegchetrean/teletty.git && cd teletty
 cp .env.example .env && nano .env
 docker compose up -d
 ```
@@ -49,7 +49,7 @@ docker compose up -d
 ### Manual
 
 ```bash
-git clone https://github.com/teletty/teletty.git && cd teletty
+git clone https://github.com/olegchetrean/teletty.git && cd teletty
 cp .env.example .env && nano .env
 npm install
 node server.js

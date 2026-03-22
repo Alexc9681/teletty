@@ -56,7 +56,7 @@ Now it's open source.
 
 **8/10** Real use cases: Emergency server fixes from anywhere. Reviewing PRs on the go. Running deployments from the couch. Monitoring logs while walking the dog.
 
-**9/10** teletty is 100% open source. MIT licensed. Self-hostable. No telemetry. No vendor lock-in. Every PR is welcome. github.com/teletty/teletty
+**9/10** teletty is 100% open source. MIT licensed. Self-hostable. No telemetry. No vendor lock-in. Every PR is welcome. github.com/olegchetrean/teletty
 
 **10/10** If you've ever wished you could code from your phone -- try teletty. Star on GitHub: [link in reply]. RT if you know a developer who needs this.
 

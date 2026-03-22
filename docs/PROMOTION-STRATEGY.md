@@ -2,7 +2,7 @@
 
 **Product:** teletty - A Telegram Mini App terminal with Claude Code integration
 **Homepage:** https://teletty.dev
-**GitHub:** https://github.com/teletty/teletty
+**GitHub:** https://github.com/olegchetrean/teletty
 **Tagline:** "A full terminal in your pocket, via Telegram."
 **Date:** 2026-03-22
 
@@ -36,8 +36,8 @@ Add this to teletty.dev homepage `<head>`:
   "operatingSystem": "Linux, macOS, Docker",
   "softwareRequirements": "Node.js >= 18, Telegram account",
   "downloadUrl": "https://www.npmjs.com/package/teletty",
-  "installUrl": "https://github.com/teletty/teletty",
-  "releaseNotes": "https://github.com/teletty/teletty/releases",
+  "installUrl": "https://github.com/olegchetrean/teletty",
+  "releaseNotes": "https://github.com/olegchetrean/teletty/releases",
   "screenshot": "https://teletty.dev/screenshots/terminal-mobile.png",
   "author": {
     "@type": "Person",
@@ -49,7 +49,7 @@ Add this to teletty.dev homepage `<head>`:
     "priceCurrency": "USD"
   },
   "license": "https://opensource.org/licenses/MIT",
-  "codeRepository": "https://github.com/teletty/teletty",
+  "codeRepository": "https://github.com/olegchetrean/teletty",
   "programmingLanguage": "JavaScript",
   "isAccessibleForFree": true
 }
@@ -128,7 +128,7 @@ Create `/llms.txt` at teletty.dev root:
 
 ## Documentation
 
-- [README](https://github.com/teletty/teletty/blob/main/README.md): Full setup guide
+- [README](https://github.com/olegchetrean/teletty/blob/main/README.md): Full setup guide
 - [Quick Start](https://teletty.dev/docs/quickstart): 3 install methods (npx, Docker, manual)
 - [Security](https://teletty.dev/docs/security): Auth model and threat mitigations
 - [Claude Code Integration](https://teletty.dev/docs/claude-code): Using AI coding agents via teletty

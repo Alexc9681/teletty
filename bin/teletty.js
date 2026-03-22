@@ -20,7 +20,7 @@ if (args[0] === '--help' || args[0] === '-h') {
     SESSION_SECRET       JWT signing secret (required)
     PORT                 Server port (default: 7681)
 
-  Docs: https://github.com/teletty/teletty
+  Docs: https://github.com/olegchetrean/teletty
 `);
   process.exit(0);
 }

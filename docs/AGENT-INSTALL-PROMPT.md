@@ -7,7 +7,7 @@ Copy-paste this prompt into Claude Code, Cursor, Aider, or any AI coding agent c
 ## The Prompt
 
 ```
-Deploy teletty (https://github.com/teletty/teletty) on this server.
+Deploy teletty (https://github.com/olegchetrean/teletty) on this server.
 
 My details:
 - Telegram bot token: [PASTE YOUR BOT TOKEN]

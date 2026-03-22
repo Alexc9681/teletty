@@ -33,6 +33,6 @@ Manual: git clone, npm install, node server.js
 
 ## Links
 
-- GitHub: https://github.com/teletty/teletty
+- GitHub: https://github.com/olegchetrean/teletty
 - License: MIT
 - Author: Oleg Chetrean
