@@ -1,0 +1,16 @@
+services:
+  teletty:
+    build: .
+    container_name: teletty
+    restart: unless-stopped
+    ports:
+      - "7681:7681"
+    env_file:
+      - .env
+    volumes:
+      - terminal-logs:/var/log/terminal-sessions
+    environment:
+      - NODE_ENV=production
+
+volumes:
+  terminal-logs:

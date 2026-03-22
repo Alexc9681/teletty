@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.local
+keys/
+*.log
+.git/
+.DS_Store
+docs/
+test/
