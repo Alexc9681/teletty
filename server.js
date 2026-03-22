@@ -54,8 +54,20 @@ app.get('/health', (req, res) => {
   });
 });
 
+// ─── Rate Limiting ──────────────────────────────────────────────────────────
+const authAttempts = new Map();
+setInterval(() => authAttempts.clear(), 60000);
+
+function rateLimitAuth(req, res, next) {
+  const ip = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.ip;
+  const count = (authAttempts.get(ip) || 0) + 1;
+  authAttempts.set(ip, count);
+  if (count > 10) return res.status(429).json({ error: 'Too many attempts' });
+  next();
+}
+
 // ─── Telegram Auth ───────────────────────────────────────────────────────────
-app.post('/auth', (req, res) => {
+app.post('/auth', rateLimitAuth, (req, res) => {
   const { token, initData } = req.body;
   if (!initData) return res.status(400).json({ error: 'Missing initData' });
 
@@ -87,6 +99,13 @@ const VOICE_LANGUAGE = process.env.VOICE_LANGUAGE || 'en';
 
 if (AZURE_OPENAI_ENDPOINT && AZURE_OPENAI_KEY) {
   app.post('/voice/transcribe', upload.single('audio'), async (req, res) => {
+    // Verify session token
+    const sessionToken = req.headers['x-session-token'];
+    const clientIp = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.ip;
+    if (!sessionToken || !auth.verifySessionToken(sessionToken, clientIp)) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
     if (!req.file) return res.status(400).json({ error: 'No audio file' });
 
     try {
@@ -126,6 +145,11 @@ if (AZURE_OPENAI_ENDPOINT && AZURE_OPENAI_KEY) {
     res.status(404).json({ error: 'Voice transcription not configured. Using browser speech API.' });
   });
 }
+
+// ─── Client Config ──────────────────────────────────────────────────────────
+app.get('/config', (req, res) => {
+  res.json({ voiceLanguage: VOICE_LANGUAGE });
+});
 
 // ─── WebSocket ───────────────────────────────────────────────────────────────
 const server = http.createServer(app);

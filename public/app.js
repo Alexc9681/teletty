@@ -47,7 +47,12 @@
   }
 
   function showAuthError(msg) {
-    document.getElementById('authOverlay').innerHTML = `<div class="auth-error">${msg}</div>`;
+    const overlay = document.getElementById('authOverlay');
+    overlay.textContent = '';
+    const div = document.createElement('div');
+    div.className = 'auth-error';
+    div.textContent = msg;
+    overlay.appendChild(div);
   }
 
   function createTerminal(tabId) {
@@ -242,7 +247,7 @@
     btn.addEventListener('mouseup', stopSpeech);
     function startSpeech() {
       recognition = new SpeechRecognition();
-      recognition.lang = 'ro-RO';
+      recognition.lang = state.voiceLanguage || 'en';
       recognition.interimResults = false;
       recognition.maxAlternatives = 1;
       recognition.onresult = (event) => sendInput(state.activeTab, event.results[0][0].transcript);
@@ -280,6 +285,7 @@
       btn.textContent = '...';
       const resp = await fetch('/voice/transcribe', {
         method: 'POST',
+        headers: { 'X-Session-Token': state.sessionToken },
         body: formData,
       });
       const data = await resp.json();
@@ -307,6 +313,16 @@
     const ok = await authenticate();
     if (!ok) return;
     document.getElementById('authOverlay').classList.add('hidden');
+
+    // Fetch server config
+    try {
+      const cfgResp = await fetch('/config');
+      if (cfgResp.ok) {
+        const cfg = await cfgResp.json();
+        state.voiceLanguage = cfg.voiceLanguage || 'en';
+      }
+    } catch {}
+
     createTerminal('main');
     setupControls();
     setupVoice();
